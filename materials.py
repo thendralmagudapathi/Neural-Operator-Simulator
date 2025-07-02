@@ -1,4 +1,5 @@
 # Default properties (could be extended later)
+"""Material Properties Listed Down Here"""
 MATERIAL_PROPERTIES = {
     "Steel": {"k": 43, "rho": 7850, "c": 470},
     "Aluminum": {"k": 205, "rho": 2700, "c": 900},

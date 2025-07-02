@@ -5,3 +5,8 @@ torchvision
 tqdm
 scipy
 matplotlib
+deepxde
+
+
+
+
