@@ -95,7 +95,7 @@ MODEL_REGISTRY = {
 def load_model(model_type):
     if model_type.lower() == "heat":
         model = FNO2D(modes1=8, modes2=8, width=16)
-        model.load_state_dict(torch.load("fno_heat_checkpoint.pt", map_location="cpu"))
+        model.load_state_dict(torch.load("models/fno_heat_checkpoint.pt", map_location="cpu"))
         return model.eval()
     elif model_type.lower() == "burgers":
         return DummyModel().eval()

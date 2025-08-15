@@ -74,6 +74,7 @@ if st.button("Run Simulation"):
     ims = []
 
     for t in range(timesteps):
+        print(f"Animating Timestep: {t}/{timesteps}")
         im = ax.imshow(output_seq[t], cmap='hot', animated=True)
         ims.append([im])
 
