@@ -9,15 +9,6 @@ from materials import material_alpha
 
 
 
-# Dummy FNO-like model (replace with real FNO/DeepONet in production)
-class DummyModel(torch.nn.Module):
-    def forward(self, x):
-        return x * torch.exp(-0.1 * torch.arange(x.shape[1])[None, :, None, None])
-
-
-
-
-
 class FNO2D(nn.Module):
     def __init__(self, modes1=16, modes2=16, width=32):
         super().__init__()
@@ -89,7 +80,10 @@ class SpectralConv2d(nn.Module):
         x = torch.fft.irfft2(out_ft, s=(H, W))
         return x
 
-
+# Dummy FNO-like model (replace with real FNO/DeepONet in production)
+class DummyModel(torch.nn.Module):
+    def forward(self, x):
+        return x * torch.exp(-0.1 * torch.arange(x.shape[1])[None, :, None, None])
 
 
 MODEL_REGISTRY = {
