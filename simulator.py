@@ -12,15 +12,13 @@ def create_hotspot(shape=(64, 64), loc=(32, 32), intensity=1.0, radius=3):
     return x
 
 
-def simulate(model_type, hotspot, timesteps=20):
+def simulate(model_type, hotspot, timesteps=100):
     print("Model Input")
     model = load_model(model_type)
     input_seq = torch.tensor(hotspot)[None, None, ...].repeat(1, timesteps, 1, 1)  # (B, T, H, W)
     with torch.no_grad():
         output_seq = model(input_seq)
     return output_seq.squeeze().numpy()  # Shape: (T, H, W)
-
-
 
 
 

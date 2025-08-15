@@ -4,6 +4,8 @@ from materials import MATERIAL_PROPERTIES
 from simulator import create_hotspot, simulate
 from utils import render_heatmap_grid
 import matplotlib.pyplot as plt
+import time
+import matplotlib.animation as animation
 
 
 st.set_page_config(page_title="Neural Operator Simulator", layout="centered")
@@ -32,7 +34,7 @@ if st.button("Run Simulation"):
     ax1.plot(x, y, 'bo')  # Blue dot on hotspot
     st.pyplot(fig1)
 
-    timesteps = 20
+    timesteps = 10000
 
     # Run the simulation
     output_seq = simulate(model_type, hotspot, timesteps)  # output_seq: (T, H, W)
@@ -51,9 +53,31 @@ if st.button("Run Simulation"):
 
     # Optional: View all timesteps
     st.subheader("Animation of Heat Diffusion")
+
+    # plot_placeholder = st.empty()
+    # stop = st.checkbox("Stop Animation")
+
+    # while not stop:
+    #     for t in range(timesteps):
+    #         if st.session_state.get("stop_animation", False):
+    #             break
+    #         fig, ax = plt.subplots()
+    #         im = ax.imshow(output_seq[t], cmap='hot', vmin=0, vmax=1)
+    #         ax.set_title(f"Timestep {t+1}/{timesteps}")
+    #         fig.colorbar(im, ax=ax)
+    #         plot_placeholder.pyplot(fig)
+    #         time.sleep(0.005) #time.sleep(0.33) controls the speed (1/0.33 ≈ 3 FPS).
+    #     time.sleep(1.0)
+
+
+    fig, ax = plt.subplots()
+    ims = []
+
     for t in range(timesteps):
-        st.write(f"Timestep {t+1}")
-        fig, ax = plt.subplots()
-        im = ax.imshow(output_seq[t], cmap='hot', vmin=0, vmax=1)
-        fig.colorbar(im, ax=ax)
-        st.pyplot(fig)
+        im = ax.imshow(output_seq[t], cmap='hot', animated=True)
+        ims.append([im])
+
+    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True)
+    ani.save("heat_simulation.gif", writer="pillow")
+    st.image("heat_simulation.gif", caption="Heat Diffusion Animation")
+
